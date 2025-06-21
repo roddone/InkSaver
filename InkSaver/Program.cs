@@ -10,7 +10,6 @@ bool noPrompt = args.Any(a => a == "-y");
 try
 {
     string document = args.Length >= 1 ? args[0] : string.Empty;
-    document = @"C:\Users\Romain\Downloads\fish.png";
 
     if (string.IsNullOrEmpty(document) || !File.Exists(document))
     {
