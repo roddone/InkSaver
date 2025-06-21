@@ -1,12 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using ImageMagick;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using System.Diagnostics;
 
 bool noPrompt = args.Any(a => a == "-y");
 
 try
 {
-    string document = args.Length >= 1 ? args[0] : string.Empty; // @"C:\Users\Romain\Downloads\tests-images\reine des neiges.webp";
+    string document = args.Length >= 1 ? args[0] : string.Empty;
 
     if (string.IsNullOrEmpty(document) || !File.Exists(document))
     {
@@ -18,14 +21,26 @@ try
     }
 
     string tempFilePath = GetTempFilePath(document);
-    using (var imageM = new MagickImage(document))
+
+    using (Image<Rgba32> image = Image.Load<Rgba32>(document))
     {
-        //turn into grayScale
-        imageM.Grayscale(PixelIntensityMethod.Lightness);
-        //update brightness
-        imageM.BrightnessContrast(new Percentage(50), new Percentage(-50));
-        //write into png (some formats cannot be print, eg. webp)
-        await imageM.WriteAsync(tempFilePath, MagickFormat.Png);
+        image.Mutate(x => x
+            // convert to gray scale
+            .Grayscale(0.5f)
+
+
+            // reduce contrast
+            .Contrast(0.25f)
+
+            // increase brightness
+            .Brightness(2f)
+        );
+
+        await image.SaveAsync(tempFilePath, new PngEncoder
+        {
+            ColorType = PngColorType.Grayscale, // Pour forcer une sortie en PNG "gris"
+            CompressionLevel = PngCompressionLevel.DefaultCompression
+        });
     }
 
     //launch print job
