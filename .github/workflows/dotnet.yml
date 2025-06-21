@@ -34,4 +34,5 @@ jobs:
     - name: Create release
       env:
           GITHUB_TOKEN: ${{ secrets.INKSAVER_RELEASE_TOKEN }}
-      run: gh release create "build-${{ github.run_number }}" --repo="roddone/InkSaver" --title="roddone/InkSaver $TAG_NAME" --generate-notes "${{ github.workspace }}/InkSaver/bin/Release/net9.0/win-x64/publish/*"
+          TAG_NAME: 1.0.${{ github.run_number }}
+      run: gh release create $env:TAG_NAME --repo="roddone/InkSaver" --title="roddone/InkSaver $env:TAG_NAME" --generate-notes "${{ github.workspace }}/InkSaver/bin/Release/net9.0/win-x64/publish/*"
