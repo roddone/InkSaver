@@ -28,8 +28,8 @@ jobs:
 #    - name: Build
 #      run: dotnet build --no-restore --configuration Release
     
-#    - name: Publish
-#      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true --no-build --self-contained true --verbosity normal
+    - name: Publish
+      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true --no-build --self-contained true --verbosity normal
 
     - name: Create release
       env:
