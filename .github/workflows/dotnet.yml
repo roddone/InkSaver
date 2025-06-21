@@ -22,14 +22,14 @@ jobs:
       with:
         dotnet-version: 9.0.x
         
-    - name: Restore dependencies
-      run: dotnet restore
+#    - name: Restore dependencies
+#      run: dotnet restore
     
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
+#    - name: Build
+#      run: dotnet build --no-restore --configuration Release
     
-    - name: Publish
-      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true --no-build --self-contained true --verbosity normal
+#    - name: Publish
+#      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true --no-build --self-contained true --verbosity normal
 
     - name: Create release
       env:
