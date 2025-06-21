@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -22,22 +22,17 @@ jobs:
       with:
         dotnet-version: 9.0.x
         
-    - name: Restore dependencies
-      run: dotnet restore
+#    - name: Restore dependencies
+#      run: dotnet restore
     
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
+#    - name: Build
+#      run: dotnet build --no-restore --configuration Release
     
     - name: Publish
-      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true --no-build --self-contained true --verbosity normal
+      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true --self-contained true --verbosity normal
 
     - name: Create release
       env:
           GITHUB_TOKEN: ${{ secrets.INKSAVER_RELEASE_TOKEN }}
-          TAG_NAME: build-${{ github.run_number }}
-      run: |
-          gh release create "$TAG_NAME" \
-              --repo="roddone/InkSaver" \
-              --title="roddone/InkSaver $TAG_NAME" \
-              --generate-notes \
-              /home/runner/work/InkSaver/InkSaver/InkSaver/bin/Release/net9.0/win-x64/publish/*
+          TAG_NAME: 1.0.${{ github.run_number }}
+      run: gh release create $env:TAG_NAME --repo="roddone/InkSaver" --title="roddone/InkSaver $env:TAG_NAME" --generate-notes "${{ github.workspace }}/InkSaver/bin/Release/net9.0/win-x64/publish/*"
