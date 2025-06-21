@@ -9,8 +9,9 @@ bool noPrompt = args.Any(a => a == "-y");
 
 try
 {
-    string document = args.Length >= 1 ? args[0] : string.Empty; 
-    
+    string document = args.Length >= 1 ? args[0] : string.Empty;
+    document = @"C:\Users\Romain\Downloads\fish.png";
+
     if (string.IsNullOrEmpty(document) || !File.Exists(document))
     {
         Console.WriteLine($"Document '{document}' not found");
@@ -28,11 +29,12 @@ try
             // convert to gray scale
             .Grayscale(0.5f)
 
+
             // reduce contrast
             .Contrast(0.25f)
 
             // increase brightness
-            .Brightness(1.5f)
+            .Brightness(2f)
         );
 
         await image.SaveAsync(tempFilePath, new PngEncoder
