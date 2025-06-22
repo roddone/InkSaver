@@ -7,6 +7,7 @@ This side project motivation came from the price of ink cartridges induced by pr
 
 ## Under the hood
 This app is written in .net 9 and published to .exe using AOT compilation, self contained mode, and trimming unused code to ensure faster startup time and smaller memory footprints.
+It uses [SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp) to transform images to grayscale.
 The result is a 6~7Mb .exe file, ready to use. 
 
 ## How to use
